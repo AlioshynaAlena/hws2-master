@@ -1,31 +1,26 @@
-.message {
-
-}
+.message {}
 
 .imageAndText {
-
+    display: flex;
+    flex-direction: row-reverse;
 }
 
-.imageAndText img {
-
-}
+.imageAndText img {}
 
 .text {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-.text:after {
-
-}
+.text:after {}
 
 .name {
-
+    text-align: right;
 }
 
-.messageText {
-
-}
+.messageText {}
 
 .time {
-
+    text-align: right;
 }
