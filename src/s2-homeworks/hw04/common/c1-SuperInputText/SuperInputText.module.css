@@ -2,6 +2,13 @@
 }
 
 .input {
+  width: 372px;
+  height: 36px;
+  top: 1461px;
+  left: 70px;
+  angle: 0 deg;
+  opacity: 1;
+
 }
 
 .inputWrapper {
@@ -11,10 +18,13 @@
 }
 
 .errorInput {
+  border-color: #cc0000;
 }
 
 .errorInput:focus {
+
 }
 
 .error {
+color: #cc0000;
 }
