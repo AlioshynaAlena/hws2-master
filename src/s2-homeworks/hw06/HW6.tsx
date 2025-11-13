@@ -16,7 +16,6 @@ const HW6 = () => {
 
 
     const save = () => {
-        console.log('Сохраняем значение:', value)
         saveState<string>('hw6-editable-span-value', value)
     }
     const restore = () => {
