@@ -1,15 +1,56 @@
 .radio {
+  display: none;
 }
 
-.radio::before {
+.radio + .span {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 20px;
 }
 
+.radio + .span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #d1d1d1;
+  border-radius: 50%;
+  background: white;
+  transition: all 0.2s ease;
+}
 
-.radio:checked::before {
+.radio:checked + .span::before {
+  border-color: #0066cc;
+  background: white;
+}
+
+.radio:checked + .span::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0066cc;
 }
 
 .label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
 }
 
 .options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label:hover .span::before {
+  border-color: #0066cc;
 }
