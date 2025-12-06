@@ -10,17 +10,19 @@ function Clock() {
     const [show, setShow] = useState<boolean>(false)
 
 
-    const start = () => {
-
-        if (timerId === undefined) {
-            const id = window.setInterval(() => {
-                setDate(new Date())
-            }, 1000)
-            setTimerId(id)
+    useEffect(() => {
+        return () => {
+            if (timerId) {
+                clearInterval(timerId)
+            }
         }
-        // пишут студенты // запустить часы (должно отображаться реальное время, а не +1)
-        // сохранить ид таймера (https://learn.javascript.ru/settimeout-setinterval#setinterval)
+    }, [timerId])
 
+    const start = () => {
+        const id = window.setInterval(() => {
+            setDate(new Date())
+        }, 1000)
+        setTimerId(id)
     }
 
     const stop = () => {
