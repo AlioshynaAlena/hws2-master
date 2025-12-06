@@ -19,19 +19,21 @@ function Clock() {
     }, [timerId])
 
     const start = () => {
-        const id = window.setInterval(() => {
-            setDate(new Date())
-        }, 1000)
-        setTimerId(id)
+        // пишут студенты
+        if (timerId === undefined) {
+            const id = window.setInterval(() => {
+                setDate(new Date())
+            }, 1000)
+            setTimerId(Number(id))
+        }
     }
 
     const stop = () => {
-        // пишут студенты // поставить часы на паузу, обнулить ид таймера (timerId <- undefined)
+        // пишут студенты
         if (timerId !== undefined) {
             clearInterval(timerId)
             setTimerId(undefined)
         }
-
     }
 
     const onMouseEnter = () => { // пишут студенты // показать дату если наведена мышка
@@ -56,6 +58,15 @@ function Clock() {
     // день недели на английском, месяц на английском (https://learn.javascript.ru/intl#intl-datetimeformat)
     const stringDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date) || <br/> // пишут студенты
     const stringMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date) || <br/> // пишут студенты
+
+
+    useEffect(() => {
+        return () => {
+            if (timerId) {
+                clearInterval(timerId)
+            }
+        }
+    }, [timerId])
 
     return (
         <div className={s.clock}>
@@ -96,7 +107,8 @@ function Clock() {
                 </SuperButton>
                 <SuperButton
                     id={'hw9-button-stop'}
-                    disabled={timerId !== undefined} // пишут студенты // задизэйблить если таймер не запущен
+                    disabled={timerId === undefined} // пишут студенты //
+                  // задизэйблить если таймер не запущен
                     onClick={stop}
                 >
                     stop
