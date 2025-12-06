@@ -60,14 +60,6 @@ function Clock() {
     const stringMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date) || <br/> // пишут студенты
 
 
-    useEffect(() => {
-        return () => {
-            if (timerId) {
-                clearInterval(timerId)
-            }
-        }
-    }, [timerId])
-
     return (
         <div className={s.clock}>
             <div
