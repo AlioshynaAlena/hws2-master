@@ -7,6 +7,8 @@ import success200 from './images/200.svg'
 import error400 from './images/400.svg'
 import error500 from './images/500.svg'
 import errorUnknown from './images/error.svg'
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 /*
 * 1 - дописать функцию send
@@ -20,6 +22,8 @@ const HW13 = () => {
     const [info, setInfo] = useState('')
     const [image, setImage] = useState('')
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const send = (x?: boolean | null) => () => {
         const url =
             x === null
@@ -30,19 +34,45 @@ const HW13 = () => {
         setImage('')
         setText('')
         setInfo('...loading')
+        setIsLoading(true)
 
         axios
             .post(url, {success: x})
             .then((res) => {
                 setCode('Код 200!')
                 setImage(success200)
+                setText('... все ок) код 200 - обычно означает что скорее' +
+                  ' всего все ок)')
+                setInfo(info)
                 // дописать
 
             })
             .catch((e) => {
                 // дописать
+                if (e.response) {
+                    const status = e.response.status
 
+                    if (status === 400) {
+                        setCode('Ошибка 400!')
+                        setImage(error400)
+                        setText('Ты не отправил success в body вообще!')
+                        setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!')
+                    } else if (status === 500) {
+                        setCode('Ошибка 500!')
+                        setImage(error500)
+                        setText('эмитация ошибки на сервере')
+                        setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)')
+                    } else {
+                        setCode('Error!')
+                        setImage(errorUnknown)
+                        setText('Network Error')
+                        setInfo('Axios Error')
+                    }
+                }
             })
+          .finally(() => {
+              setIsLoading(false)
+          })
     }
 
     return (
@@ -55,6 +85,7 @@ const HW13 = () => {
                         id={'hw13-send-true'}
                         onClick={send(true)}
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
@@ -64,6 +95,7 @@ const HW13 = () => {
                         id={'hw13-send-false'}
                         onClick={send(false)}
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
@@ -73,6 +105,7 @@ const HW13 = () => {
                         id={'hw13-send-undefined'}
                         onClick={send(undefined)}
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
@@ -82,6 +115,7 @@ const HW13 = () => {
                         id={'hw13-send-null'}
                         onClick={send(null)} // имитация запроса на не корректный адрес
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
