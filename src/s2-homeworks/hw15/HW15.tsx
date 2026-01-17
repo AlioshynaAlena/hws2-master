@@ -94,20 +94,30 @@ const HW15 = () => {
     useEffect(() => {
         const params = Object.fromEntries(searchParams)
 
-        const pageFromParams = Number(params.page) || 1
-        const countFromParams = Number(params.count) || 4
-        const sortFromParams = params.sort || ''
+        // если параметров нет — записываем дефолтные и ВЫХОДИМ
+        if (!params.page || !params.count) {
+            setSearchParams({
+                page: '1',
+                count: '4',
+            })
+            return
+        }
 
-        setPage(pageFromParams)
-        setCount(countFromParams)
-        setSort(sortFromParams)
+        const page = Number(params.page)
+        const count = Number(params.count)
+        const sort = params.sort || ''
+
+        setPage(page)
+        setCount(count)
+        setSort(sort)
 
         sendQuery({
-            page: pageFromParams,
-            count: countFromParams,
-            ...(sortFromParams && { sort: sortFromParams }),
+            page,
+            count,
+            ...(sort && { sort }),
         })
-    }, [])
+    }, [searchParams])
+
 
 
     const mappedTechs = techs.map(t => (
