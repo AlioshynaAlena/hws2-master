@@ -65,36 +65,30 @@ const HW15 = () => {
         setPage(newPage)
         setCount(newCount)
 
-        const params = {
-            sort,
+        const params: any = {
             page: newPage,
             count: newCount,
         }
 
+        if (sort) params.sort = sort
+
         sendQuery(params)
-        setSearchParams({
-            sort,
-            page: String(newPage),
-            count: String(newCount),
-        })
+        setSearchParams(params)
     }
 
     const onChangeSort = (newSort: string) => {
         setSort(newSort)
         setPage(1)
 
-        const params = {
-            sort: newSort,
+        const params: any = {
             page: 1,
             count,
         }
 
+        if (newSort) params.sort = newSort
+
         sendQuery(params)
-        setSearchParams({
-            sort: newSort,
-            page: '1',
-            count: String(count),
-        })
+        setSearchParams(params)
     }
 
     useEffect(() => {
