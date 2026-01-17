@@ -51,12 +51,14 @@ const HW15 = () => {
         setLoading(true)
         getTechs(params)
             .then((res) => {
-                if (res) {
-                    setTechs(res.data.techs)
-                    setTotalCount(res.data.totalCount)
-                }
-                setLoading(false)
+                if (!res) return
+
+                setTechs(res.data.techs)
+                setTotalCount(res.data.totalCount)
             })
+          .finally(() => {
+              setLoading(false)
+          })
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
@@ -64,13 +66,17 @@ const HW15 = () => {
         setCount(newCount)
 
         const params = {
-            page: newPage.toString(),
-            count: newCount.toString(),
-            sort
+            sort,
+            page: newPage,
+            count: newCount,
         }
 
         sendQuery(params)
-        setSearchParams(params)
+        setSearchParams({
+            sort,
+            page: String(newPage),
+            count: String(newCount),
+        })
     }
 
     const onChangeSort = (newSort: string) => {
@@ -78,13 +84,17 @@ const HW15 = () => {
         setPage(1)
 
         const params = {
-            page: '1',
-            count: count.toString(),
-            sort: newSort
+            sort: newSort,
+            page: 1,
+            count,
         }
 
         sendQuery(params)
-        setSearchParams(params)
+        setSearchParams({
+            sort: newSort,
+            page: '1',
+            count: String(count),
+        })
     }
 
     useEffect(() => {
